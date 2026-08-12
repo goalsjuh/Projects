@@ -1,0 +1,6 @@
+timestamp,event_type,host,user,process,observation
+2026-07-03T13:00:00Z,process,LAB-WIN01,labuser,WINWORD.EXE,Document process started
+2026-07-03T13:00:08Z,process,LAB-WIN01,labuser,powershell.exe,EncodedCommand observed
+2026-07-03T13:00:12Z,network,LAB-WIN01,labuser,powershell.exe,Outbound HTTPS connection
+2026-07-03T13:00:25Z,process,LAB-WIN01,labuser,rundll32.exe,DLL execution observed
+2026-07-03T13:05:00Z,file,LAB-WIN01,labuser,rundll32.exe,Large volume of .locked file modifications

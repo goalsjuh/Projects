@@ -1,0 +1,21 @@
+# Evidence Collection Checklist
+
+- [ ] Endpoint identity, hostname and user context
+- [ ] Alert timestamp and timezone
+- [ ] Process tree
+- [ ] Full command lines
+- [ ] File hashes
+- [ ] Digital-signature status
+- [ ] EDR timeline
+- [ ] Sysmon Event ID 1 - Process Creation
+- [ ] Sysmon Event ID 3 - Network Connection, if enabled
+- [ ] PowerShell Operational logs
+- [ ] PowerShell Script Block Logging / Event ID 4104
+- [ ] Windows Security events
+- [ ] DNS telemetry
+- [ ] Proxy / HTTP(S) telemetry
+- [ ] MFT metadata
+- [ ] USN Journal activity
+- [ ] File-extension and mass-write timeline
+- [ ] Evidence of lateral movement
+- [ ] Related alerts on other endpoints

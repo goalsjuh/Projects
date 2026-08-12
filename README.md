@@ -1,107 +1,67 @@
-# Cybersecurity Projects
+# Ransomware Incident Investigation
 
-This directory contains hands-on cybersecurity projects focused on **Security Operations, Blue Team, Incident Response, Threat Hunting, Cloud Security, Security Automation, and Database Security**.
+## Objective
 
-The projects are designed to demonstrate practical security analysis skills across enterprise environments, combining cybersecurity concepts with my professional background in infrastructure, Linux, networking, Oracle databases, cloud technologies, and security operations.
+Demonstrate a structured Blue Team investigation of a suspicious attack chain involving a document process, encoded PowerShell execution, outbound HTTPS communication, `rundll32`, a DLL artifact, and large-scale file modification.
 
-Each project follows an investigation-oriented approach, documenting the scenario, technical evidence, analysis methodology, tools used, security findings, MITRE ATT&CK mapping when applicable, and recommended response or remediation actions.
+## Scenario
 
-## Areas Covered
+Synthetic attack chain:
 
-* Security Operations and SOC investigations
-* Incident triage and response
-* Threat hunting
-* Windows and PowerShell security analysis
-* Security log analysis and correlation
-* SIEM and detection concepts
-* MITRE ATT&CK mapping
-* Cloud Security and IAM
-* Vulnerability and exposure analysis
-* Python security automation
-* Oracle and Database Security
+```text
+WINWORD
+  -> PowerShell -EncodedCommand
+  -> HTTPS connection
+  -> rundll32.exe
+  -> update.dll
+  -> 734 files modified with .locked extension
+```
 
-## Projects
+The behavior is strongly consistent with ransomware activity, but the investigation deliberately separates **hypothesis from confirmed evidence**.
 
-### 01 — Ransomware Incident Investigation
+## Investigation Workflow
 
-Blue Team investigation of a simulated ransomware incident involving suspicious PowerShell execution, process relationships, DLL execution, mass file modification, and ransomware indicators.
+1. Validate the alert and affected endpoint.
+2. Build the process tree.
+3. Capture full command lines and parent-child relationships.
+4. Hash suspicious artifacts and verify digital signatures.
+5. Review EDR timeline and Windows telemetry.
+6. Analyze Sysmon process and network events.
+7. Review DNS / HTTP(S) connections.
+8. Validate file-system impact using MFT and USN Journal artifacts.
+9. Check for lateral movement or additional impacted endpoints.
+10. Map confirmed behavior to MITRE ATT&CK.
+11. Contain while preserving evidence.
 
-**Skills:** Incident Response · Windows Forensics · Sysmon · PowerShell · MITRE ATT&CK · Evidence Analysis
+## Evidence Checklist
 
----
+See [evidence-checklist.md](evidence-checklist.md).
 
-### 02 — PowerShell Threat Hunting
+## MITRE ATT&CK Mapping
 
-Threat hunting project focused on detecting suspicious PowerShell activity through Windows telemetry, command-line analysis, process behavior, and security events.
+| Behavior | Technique |
+|---|---|
+| PowerShell execution | T1059.001 - PowerShell |
+| Rundll32 execution | T1218.011 - Rundll32 |
+| Web protocol communication | T1071.001 - Web Protocols |
+| File encryption for impact | T1486 - Data Encrypted for Impact |
 
-**Skills:** Threat Hunting · PowerShell · Windows Event Logs · Sysmon · Detection Analysis
+## Important Analytical Notes
 
----
+- `-EncodedCommand` is not malicious by itself.
+- `rundll32.exe` loading a DLL does not prove DLL injection.
+- Credential dumping tools should not be attributed without evidence.
+- Every conclusion should trace back to telemetry or an artifact.
 
-### 03 — Python Security Log Analyzer
+## Containment
 
-Python-based security automation project for parsing logs, identifying suspicious events, extracting indicators, and assisting security investigations.
+- Isolate the affected endpoint.
+- Preserve relevant evidence.
+- Block validated indicators of compromise.
+- Hunt for the same indicators across the environment.
+- Validate whether lateral movement occurred.
+- Begin recovery only after containment scope is understood.
 
-**Skills:** Python · Security Automation · Log Analysis · Detection Logic
+## Skills Demonstrated
 
----
-
-### 04 — Oracle Database Security Audit
-
-Security assessment of Oracle database environments focused on users, roles, privileges, access controls, excessive permissions, and security configuration.
-
-**Skills:** Database Security · Oracle · SQL · IAM · RBAC · Least Privilege
-
----
-
-### 05 — Cloud IAM Security Review
-
-Cloud security assessment focused on identities, excessive permissions, access risks, privilege management, and least-privilege principles.
-
-**Skills:** Cloud Security · IAM · Access Control · Risk Analysis
-
----
-
-### 06 — MITRE ATT&CK Detection Mapping
-
-Mapping of attacker behaviors, investigation scenarios, and detection opportunities to MITRE ATT&CK tactics and techniques.
-
-**Skills:** MITRE ATT&CK · Threat Analysis · Detection Engineering · Blue Team
-
----
-
-### 07 — Security Automation Toolkit
-
-Collection of scripts and automation examples designed to support security operations, investigation, evidence collection, and repetitive SOC activities.
-
-**Skills:** Python · PowerShell · Shell Scripting · Security Automation
-
----
-
-### 08 — Machine Learning Classification Study
-
-Academic machine learning project demonstrating data preparation, classification algorithms, model comparison, and analytical methodology.
-
-Although this project is not exclusively focused on cybersecurity, it demonstrates analytical and data-driven skills applicable to security analytics and threat detection.
-
-**Skills:** Python · Machine Learning · Data Analysis · Classification
-
-## Project Methodology
-
-Whenever applicable, projects follow a structured security investigation workflow:
-
-**Alert → Triage → Investigation → Evidence Collection → Threat Analysis → MITRE ATT&CK Mapping → Response → Remediation → Lessons Learned**
-
-The goal of this portfolio is not only to demonstrate knowledge of security tools, but also to show the reasoning and methodology used to investigate security events and make defensible security decisions.
-
-## Professional Focus
-
-My current professional focus includes:
-
-**Security Operations · Blue Team · Incident Response · Threat Hunting · Cloud Security · Database Security**
-
-I am particularly interested in environments where cybersecurity intersects with **enterprise infrastructure, cloud platforms, identity, databases, and security monitoring**.
-
----
-
-> All scenarios, datasets, IP addresses, logs, credentials, and artifacts used in this repository are synthetic, anonymized, publicly available, or created specifically for educational purposes. No confidential client or employer information is included.
+SOC triage, incident investigation, process-tree analysis, Windows telemetry, EDR workflow, file-system forensics, MITRE ATT&CK mapping, evidence-based reasoning, incident containment.
