@@ -1,0 +1,6 @@
+2026-08-10T10:00:01Z severity=INFO event=login_success user=alice src_ip=10.10.10.12
+2026-08-10T10:03:11Z severity=MEDIUM event=login_failed user=admin src_ip=203.0.113.10
+2026-08-10T10:03:17Z severity=MEDIUM event=login_failed user=admin src_ip=203.0.113.10
+2026-08-10T10:03:22Z severity=MEDIUM event=login_failed user=admin src_ip=203.0.113.10
+2026-08-10T10:04:01Z severity=HIGH event=powershell_encoded user=alice src_ip=10.10.10.12
+2026-08-10T10:05:02Z severity=HIGH event=suspicious_dns user=alice src_ip=10.10.10.12
