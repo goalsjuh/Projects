@@ -1,0 +1,16 @@
+// Microsoft Defender XDR / Sentinel-style hunting examples.
+// Adjust table/field names to the environment schema.
+
+DeviceProcessEvents
+| where Timestamp > ago(24h)
+| where FileName =~ "powershell.exe" or FileName =~ "pwsh.exe"
+| where ProcessCommandLine has_any ("-enc", "-EncodedCommand", "Invoke-Expression", "IEX", "DownloadString")
+| project Timestamp, DeviceName, AccountName, InitiatingProcessFileName, FileName, ProcessCommandLine
+| order by Timestamp desc
+
+// Follow-up: investigate PowerShell network activity.
+DeviceNetworkEvents
+| where Timestamp > ago(24h)
+| where InitiatingProcessFileName in~ ("powershell.exe", "pwsh.exe")
+| project Timestamp, DeviceName, InitiatingProcessAccountName, RemoteUrl, RemoteIP, RemotePort, InitiatingProcessCommandLine
+| order by Timestamp desc
